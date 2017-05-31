@@ -29,5 +29,9 @@ namespace MacroTrackr.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<UserPreference> UserPreferences{ get; set; }
+
+        public DbSet<MacroNutrient> MacroNutrients { get; set; }
     }
 }

@@ -1,0 +1,42 @@
+﻿@model MacroTrackr.Models.UserPreference
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserPreference</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Macro.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Macro.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Minimum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Minimum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Maximum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Maximum)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserPreferenceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
