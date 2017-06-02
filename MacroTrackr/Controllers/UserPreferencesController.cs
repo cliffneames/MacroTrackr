@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MacroTrackr.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MacroTrackr.Controllers
 {
@@ -41,7 +42,14 @@ namespace MacroTrackr.Controllers
         // GET: UserPreferences/Create
         public ActionResult Create()
         {
-            ViewBag.MacroNutrientID = new SelectList(db.MacroNutrients, "MacroNutrientID", "Name");
+            // Only allows user to select MacroNutrients they haven't already selected.
+            string userId = User.Identity.GetUserId();
+
+            var userPreferences = db.UserPreferences.Include(u => u.Macro).Where( p => p.UserID == userId).Select(p => p.MacroNutrientID);
+
+           
+
+            ViewBag.MacroNutrientID = new SelectList(db.MacroNutrients.Where( m => !userPreferences.Contains(m.MacroNutrientID)), "MacroNutrientID", "Name");
             return View();
         }
 
@@ -52,6 +60,9 @@ namespace MacroTrackr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserPreferenceID,MacroNutrientID,Minimum,Maximum")] UserPreference userPreference)
         {
+
+            userPreference.UserID = User.Identity.GetUserId();
+
             if (ModelState.IsValid)
             {
                 db.UserPreferences.Add(userPreference);
@@ -78,6 +89,14 @@ namespace MacroTrackr.Controllers
             ViewBag.MacroNutrientID = new SelectList(db.MacroNutrients, "MacroNutrientID", "Name", userPreference.MacroNutrientID);
             return View(userPreference);
         }
+        // GET: UserPreferences/Map
+        //This is where we pull in the map from the Google API call
+
+        public ActionResult Map()
+        {
+            return View();
+        }
+
 
         // POST: UserPreferences/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -121,6 +140,14 @@ namespace MacroTrackr.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        // POST: UserPreferences/ReturnResults
+        [HttpPost]
+        public void ReturnResults (List<string> Results)
+        {
+            Console.WriteLine(Results);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -201,6 +201,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserPrefController.cs" />
     <Compile Include="Controllers\UserPreferencesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -284,6 +285,7 @@
     <Content Include="Views\UserPreferences\Details.cshtml" />
     <Content Include="Views\UserPreferences\Edit.cshtml" />
     <Content Include="Views\UserPreferences\Index.cshtml" />
+    <Content Include="Views\UserPreferences\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
