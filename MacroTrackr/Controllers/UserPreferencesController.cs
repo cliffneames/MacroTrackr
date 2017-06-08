@@ -18,8 +18,7 @@ namespace MacroTrackr.Controllers
     public class UserPreferencesController : Controller
     {
 
-        private const string myApiId = "0f539cac";
-        private const string myApiKey = "eb0deacb514408dc12ff470c8f35ecdb";
+        
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -148,30 +147,44 @@ namespace MacroTrackr.Controllers
         }
 
 
-        /*public NutritionixSearchResult[] Search(string query)
+       /* public static void PowerSearchItems(List<string> Results)
         {
-            var nutritionix = new NutritionixClient();
-            nutritionix.Initialize(myApiId, myApiKey);
 
-            var request = new NutritionixSearchRequest { Query = query };
-            NutritionixSearchResponse response = nutritionix.SearchItems(request);
+            string myAppId = "0f539cac";
+            string myAppKey = "eb0deacb514408dc12ff470c8f35ecdb";
 
-            return response.Results;
-        }
+        var nutritionix = new NutritionixClient();
+            nutritionix.Initialize(myAppId, myAppKey);
 
-        public NutritionixItem Retrieve(string id)
-        {
-            var nutritionix = new NutritionixClient();
-            nutritionix.Initialize(myApiId, myApiKey);
+            var request = new PowerSearchRequest
+            {
+                Query = "Your Macros",
+                Fields = new SearchResultFieldCollection { x => x.Name, x => x.NutritionFact_Calories, x => x.ItemType },
+                SortBy = new SearchResultSort(x => x.NutritionFact_Calories, SortOrder.Descending),
+                Filters = new SearchFilterCollection
+                {
+                    new ItemTypeFilter {Negated = true, ItemType = ItemType.Packaged}
+                }
+            };
 
-            return nutritionix.RetrieveItem(id);
+            Console.WriteLine("Power Searching Nutritionix for:  sorted by calories, not a packaged food...");
+            SearchResponse response = nutritionix.SearchItems(request);
+
+            Console.WriteLine("Displaying results 1 - {0} of {1}", response.Results.Length, response.TotalResults);
+            foreach (SearchResult result in response.Results)
+            {
+                Console.WriteLine("* {0} ({1} calories) from the {2} database", result.Item.Name, result.Item.NutritionFact_Calories, result.Item.ItemType);
+            }
+
+            Console.WriteLine();
         }*/
 
         // POST: UserPreferences/ReturnResults
         [HttpPost]
         public void ReturnResults (List<string> Results)
         {
-            
+            //PowerSearchItems(Results);
+            Console.Write(Results);
 
         }
 
