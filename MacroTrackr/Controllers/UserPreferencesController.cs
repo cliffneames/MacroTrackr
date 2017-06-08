@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MacroTrackr.Models;
 using Microsoft.AspNet.Identity;
+using Nutritionix;
+
 
 namespace MacroTrackr.Controllers
 {
@@ -15,6 +17,10 @@ namespace MacroTrackr.Controllers
     [Authorize]
     public class UserPreferencesController : Controller
     {
+
+        private const string myApiId = "0f539cac";
+        private const string myApiKey = "eb0deacb514408dc12ff470c8f35ecdb";
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: UserPreferences
@@ -141,11 +147,32 @@ namespace MacroTrackr.Controllers
             return RedirectToAction("Index");
         }
 
+
+        /*public NutritionixSearchResult[] Search(string query)
+        {
+            var nutritionix = new NutritionixClient();
+            nutritionix.Initialize(myApiId, myApiKey);
+
+            var request = new NutritionixSearchRequest { Query = query };
+            NutritionixSearchResponse response = nutritionix.SearchItems(request);
+
+            return response.Results;
+        }
+
+        public NutritionixItem Retrieve(string id)
+        {
+            var nutritionix = new NutritionixClient();
+            nutritionix.Initialize(myApiId, myApiKey);
+
+            return nutritionix.RetrieveItem(id);
+        }*/
+
         // POST: UserPreferences/ReturnResults
         [HttpPost]
         public void ReturnResults (List<string> Results)
         {
-            Console.WriteLine(Results);
+            
+
         }
 
 
