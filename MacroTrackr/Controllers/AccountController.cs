@@ -449,7 +449,7 @@ namespace MacroTrackr.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Userpreferences");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

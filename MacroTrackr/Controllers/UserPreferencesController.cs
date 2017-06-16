@@ -29,7 +29,7 @@ namespace MacroTrackr.Controllers
             return View(userPreferences.ToList());
         }
 
-        // GET: UserPreferences/Details/5
+        /*GET: UserPreferences/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,7 +42,7 @@ namespace MacroTrackr.Controllers
                 return HttpNotFound();
             }
             return View(userPreference);
-        }
+        }*/
 
         // GET: UserPreferences/Create
         public ActionResult Create()
@@ -147,7 +147,7 @@ namespace MacroTrackr.Controllers
         }
 
 
-       /* public static void PowerSearchItems(List<string> Results)
+        public static void PowerSearchItems(List<string> Results)
         {
 
             string myAppId = "0f539cac";
@@ -156,11 +156,13 @@ namespace MacroTrackr.Controllers
         var nutritionix = new NutritionixClient();
             nutritionix.Initialize(myAppId, myAppKey);
 
+            string results = Results.Aggregate((i, j) => i + " OR " + j);
+
             var request = new PowerSearchRequest
             {
-                Query = "Your Macros",
-                Fields = new SearchResultFieldCollection { x => x.Name, x => x.NutritionFact_Calories, x => x.ItemType },
-                SortBy = new SearchResultSort(x => x.NutritionFact_Calories, SortOrder.Descending),
+                Query = results,
+                Fields = new SearchResultFieldCollection { x => x.Name, x => x.NutritionFact_TotalCarbohydrate, x => x.ItemType },
+                SortBy = new SearchResultSort(x => x.NutritionFact_TotalCarbohydrate, SortOrder.Descending),
                 Filters = new SearchFilterCollection
                 {
                     new ItemTypeFilter {Negated = true, ItemType = ItemType.Packaged}
@@ -177,14 +179,15 @@ namespace MacroTrackr.Controllers
             }
 
             Console.WriteLine();
-        }*/
+        }
 
         // POST: UserPreferences/ReturnResults
         [HttpPost]
         public void ReturnResults (List<string> Results)
         {
-            //PowerSearchItems(Results);
-            Console.Write(Results);
+
+            PowerSearchItems(Results);
+            Console.WriteLine(Results);
 
         }
 

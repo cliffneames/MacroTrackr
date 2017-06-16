@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Macro Nutrient Preferences</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button> @Html.ActionLink("Add Macro Restraints", "Create")</button>
 </p>
 <table class="table">
     <tr>
@@ -36,7 +36,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.UserPreferenceID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserPreferenceID }) |
+            <!-- @Html.ActionLink("Details", "Details", new { id=item.UserPreferenceID }) | -->
             @Html.ActionLink("Delete", "Delete", new { id=item.UserPreferenceID })
         </td>
     </tr>
@@ -47,4 +47,4 @@
 
 </table>
 
-<a href="/userPreferences/Map"> Click here to see the Map so far!</a>
+<button><a href="/userPreferences/Map"> Click here to see MacroTrackr in action!</a></button>
