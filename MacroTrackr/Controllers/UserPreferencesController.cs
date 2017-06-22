@@ -25,8 +25,10 @@ namespace MacroTrackr.Controllers
         // GET: UserPreferences
         public ActionResult Index()
         {
-            var userPreferences = db.UserPreferences.Include(u => u.Macro);
-            return View(userPreferences.ToList());
+            //var userPreferences = db.UserPreferences.Include(u => u.Macro);
+            //return View(userPreferences.ToList());
+            string userID = User.Identity.GetUserId();
+            return View(db.UserPreferences.Where(p => p.UserID == userID).ToList());
         }
 
         /*GET: UserPreferences/Details/5
@@ -86,7 +88,8 @@ namespace MacroTrackr.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserPreference userPreference = db.UserPreferences.Find(id);
+            string userID = User.Identity.GetUserId();
+            UserPreference userPreference = db.UserPreferences.Where(p => p.UserID == userID && p.UserPreferenceID == id).FirstOrDefault();
             if (userPreference == null)
             {
                 return HttpNotFound();
@@ -94,14 +97,6 @@ namespace MacroTrackr.Controllers
             ViewBag.MacroNutrientID = new SelectList(db.MacroNutrients, "MacroNutrientID", "Name", userPreference.MacroNutrientID);
             return View(userPreference);
         }
-        // GET: UserPreferences/Map
-        //This is where we pull in the map from the Google API call
-
-        public ActionResult Map()
-        {
-            return View();
-        }
-
 
         // POST: UserPreferences/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -110,9 +105,24 @@ namespace MacroTrackr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserPreferenceID,MacroNutrientID,Minimum,Maximum")] UserPreference userPreference)
         {
+
+            string userID = User.Identity.GetUserId();
+            UserPreference originalUP = db.UserPreferences.Where(p => p.UserID == userID && p.UserPreferenceID == userPreference.UserPreferenceID).FirstOrDefault();
+            
+                        if (originalUP == null)
+                            {
+                                return HttpNotFound();
+                            }
+
+            //Move over all the properties that need to be set.
+            
+            originalUP.Minimum = userPreference.Minimum;
+            originalUP.Maximum = userPreference.Maximum;
+
+
             if (ModelState.IsValid)
             {
-                db.Entry(userPreference).State = EntityState.Modified;
+                db.Entry(originalUP).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -127,7 +137,10 @@ namespace MacroTrackr.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserPreference userPreference = db.UserPreferences.Find(id);
+            
+            string userID = User.Identity.GetUserId();
+            UserPreference userPreference = db.UserPreferences.Where(p => p.UserID == userID && p.UserPreferenceID == id).FirstOrDefault();
+
             if (userPreference == null)
             {
                 return HttpNotFound();
@@ -140,21 +153,12 @@ namespace MacroTrackr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            UserPreference userPreference = db.UserPreferences.Find(id);
+            string userID = User.Identity.GetUserId();
+            UserPreference userPreference = db.UserPreferences.Where(p => p.UserID == userID && p.UserPreferenceID == id).FirstOrDefault();
             db.UserPreferences.Remove(userPreference);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        // POST: UserPreferences/ReturnResults
-        [HttpPost]
-        public void ReturnResults (List<string> Results)
-        {
-
-            Console.WriteLine(Results);
-
-        }
-
 
         protected override void Dispose(bool disposing)
         {

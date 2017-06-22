@@ -206,7 +206,6 @@
     <Compile Include="Controllers\FoodItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\UserPrefController.cs" />
     <Compile Include="Controllers\UserPreferencesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -304,12 +303,12 @@
     <Content Include="Views\UserPreferences\Details.cshtml" />
     <Content Include="Views\UserPreferences\Edit.cshtml" />
     <Content Include="Views\UserPreferences\Index.cshtml" />
-    <Content Include="Views\UserPreferences\Map.cshtml" />
     <Content Include="Views\FoodItems\Create.cshtml" />
     <Content Include="Views\FoodItems\Delete.cshtml" />
     <Content Include="Views\FoodItems\Details.cshtml" />
     <Content Include="Views\FoodItems\Edit.cshtml" />
     <Content Include="Views\FoodItems\Index.cshtml" />
+    <Content Include="Views\FoodItems\Dailyview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

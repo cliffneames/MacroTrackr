@@ -148,5 +148,13 @@ namespace MacroTrackr.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Dailyview()
+        {
+            string userID = User.Identity.GetUserId();
+            return View(db.FoodItems.Where(p => p.UserID == userID && DbFunctions.TruncateTime(p.WhenEaten) == DbFunctions.TruncateTime(DateTime.Now)).ToList());
+
+            
+        }
     }
 }
