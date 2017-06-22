@@ -33,5 +33,7 @@ namespace MacroTrackr.Models
         public DbSet<UserPreference> UserPreferences{ get; set; }
 
         public DbSet<MacroNutrient> MacroNutrients { get; set; }
+
+        public System.Data.Entity.DbSet<MacroTrackr.Models.FoodItem> FoodItems { get; set; }
     }
 }

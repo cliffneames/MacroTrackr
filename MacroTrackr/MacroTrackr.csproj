@@ -203,6 +203,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FoodItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserPrefController.cs" />
@@ -218,8 +219,21 @@
     <Compile Include="Migrations\201705261544546_NutrinionixNameAdded.Designer.cs">
       <DependentUpon>201705261544546_NutrinionixNameAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706211701058_Pivot2.0.cs" />
+    <Compile Include="Migrations\201706211701058_Pivot2.0.Designer.cs">
+      <DependentUpon>201706211701058_Pivot2.0.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706221437075_ForgotFoodItemName.cs" />
+    <Compile Include="Migrations\201706221437075_ForgotFoodItemName.Designer.cs">
+      <DependentUpon>201706221437075_ForgotFoodItemName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706221438598_CommentsDeleted.cs" />
+    <Compile Include="Migrations\201706221438598_CommentsDeleted.Designer.cs">
+      <DependentUpon>201706221438598_CommentsDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FoodItem.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MacroNutrient.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -291,6 +305,11 @@
     <Content Include="Views\UserPreferences\Edit.cshtml" />
     <Content Include="Views\UserPreferences\Index.cshtml" />
     <Content Include="Views\UserPreferences\Map.cshtml" />
+    <Content Include="Views\FoodItems\Create.cshtml" />
+    <Content Include="Views\FoodItems\Delete.cshtml" />
+    <Content Include="Views\FoodItems\Details.cshtml" />
+    <Content Include="Views\FoodItems\Edit.cshtml" />
+    <Content Include="Views\FoodItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -316,6 +335,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705261544546_NutrinionixNameAdded.resx">
       <DependentUpon>201705261544546_NutrinionixNameAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706211701058_Pivot2.0.resx">
+      <DependentUpon>201706211701058_Pivot2.0.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706221437075_ForgotFoodItemName.resx">
+      <DependentUpon>201706221437075_ForgotFoodItemName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706221438598_CommentsDeleted.resx">
+      <DependentUpon>201706221438598_CommentsDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -146,47 +146,11 @@ namespace MacroTrackr.Controllers
             return RedirectToAction("Index");
         }
 
-
-        public static void PowerSearchItems(List<string> Results)
-        {
-
-            string myAppId = "0f539cac";
-            string myAppKey = "eb0deacb514408dc12ff470c8f35ecdb";
-
-        var nutritionix = new NutritionixClient();
-            nutritionix.Initialize(myAppId, myAppKey);
-
-            string results = Results.Aggregate((i, j) => i + " OR " + j);
-
-            var request = new PowerSearchRequest
-            {
-                Query = results,
-                Fields = new SearchResultFieldCollection { x => x.Name, x => x.NutritionFact_TotalCarbohydrate, x => x.ItemType },
-                SortBy = new SearchResultSort(x => x.NutritionFact_TotalCarbohydrate, SortOrder.Descending),
-                Filters = new SearchFilterCollection
-                {
-                    new ItemTypeFilter {Negated = true, ItemType = ItemType.Packaged}
-                }
-            };
-
-            Console.WriteLine("Power Searching Nutritionix for:  sorted by calories, not a packaged food...");
-            SearchResponse response = nutritionix.SearchItems(request);
-
-            Console.WriteLine("Displaying results 1 - {0} of {1}", response.Results.Length, response.TotalResults);
-            foreach (SearchResult result in response.Results)
-            {
-                Console.WriteLine("* {0} ({1} calories) from the {2} database", result.Item.Name, result.Item.NutritionFact_Calories, result.Item.ItemType);
-            }
-
-            Console.WriteLine();
-        }
-
         // POST: UserPreferences/ReturnResults
         [HttpPost]
         public void ReturnResults (List<string> Results)
         {
 
-            PowerSearchItems(Results);
             Console.WriteLine(Results);
 
         }
