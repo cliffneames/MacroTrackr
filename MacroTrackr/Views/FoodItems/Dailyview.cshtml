@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MacroTrackr.Models.FoodItem>
+﻿@model MacroTrackr.Models.UserPrefFoodItemViewModel
 
 @{
     ViewBag.Title = "Dailyview";
@@ -12,27 +12,27 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.foodItem.First().Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TimeOfMeal)
+            @Html.DisplayNameFor(model => model.foodItem.First().TimeOfMeal)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WhenEaten)
+            @Html.DisplayNameFor(model => model.foodItem.First().WhenEaten)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Carbs)
+            @Html.DisplayNameFor(model => model.foodItem.First().Carbs)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Protein)
+            @Html.DisplayNameFor(model => model.foodItem.First().Protein)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fat)
+            @Html.DisplayNameFor(model => model.foodItem.First().Fat)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.foodItem)
     {
         <tr>
             <td>
@@ -66,20 +66,20 @@
 <table class="table">
 <tr>
     <th>
-        @Html.DisplayNameFor(model => model.Name)
+        @Html.DisplayNameFor(model => model.foodItem.First().Name)
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.Carbs)
+        @Html.DisplayNameFor(model => model.foodItem.First().Carbs)
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.Protein)
+        @Html.DisplayNameFor(model => model.foodItem.First().Protein)
     </th>
     <th>
-        @Html.DisplayNameFor(model => model.Fat)
+        @Html.DisplayNameFor(model => model.foodItem.First().Fat)
     </th>
     <th></th>
 </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.foodItem)
     {
         <tr>
             <td>
@@ -94,9 +94,29 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Fat)
             </td>
-            
         </tr>
     }
+        <tr>
+            <td>Totals</td>
+            <td>@Model.foodItem.Sum(p => p.Carbs)</td>
+            <td>@Model.foodItem.Sum(p => p.Protein)</td>
+            <td>@Model.foodItem.Sum(p => p.Fat)</td>
+        </tr>
+    
+        <tr>
+            <td>Goals</td>
+            <td>@Model.userPreference.Where(m => m.Macro.Name == "Carbohydrates").FirstOrDefault().Maximum</td>
+            <td>@Model.userPreference.Where(m => m.Macro.Name == "Protein").FirstOrDefault().Maximum</td>
+            <td>@Model.userPreference.Where(m => m.Macro.Name == "Fat").FirstOrDefault().Maximum</td>
+        </tr>
+
+        <tr>
+            <td>Current</td>
+            <td>@(Model.foodItem.Sum(p => p.Carbs) - Model.userPreference.Where(m => m.Macro.Name == "Carbohydrates").FirstOrDefault().Maximum)</td>
+            <td>@(Model.foodItem.Sum(p => p.Protein) - Model.userPreference.Where(m => m.Macro.Name == "Protein").FirstOrDefault().Maximum)</td>
+            <td>@(Model.foodItem.Sum(p => p.Fat) - Model.userPreference.Where(m => m.Macro.Name == "Fat").FirstOrDefault().Maximum)</td>
+             
+        </tr>
 
 </table>
 

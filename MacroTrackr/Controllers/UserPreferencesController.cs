@@ -28,7 +28,7 @@ namespace MacroTrackr.Controllers
             //var userPreferences = db.UserPreferences.Include(u => u.Macro);
             //return View(userPreferences.ToList());
             string userID = User.Identity.GetUserId();
-            return View(db.UserPreferences.Where(p => p.UserID == userID).ToList());
+            return View(db.UserPreferences.Include(u => u.Macro).Where(p => p.UserID == userID).ToList());
         }
 
         /*GET: UserPreferences/Details/5

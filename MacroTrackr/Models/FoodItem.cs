@@ -16,6 +16,7 @@ namespace MacroTrackr.Models
         public float Carbs { get; set; }
         public float Protein { get; set; }
         public float Fat { get; set; }
+
     }
 
     public enum MealTime { snack, breakfast, lunch, dinner }
