@@ -27,6 +27,36 @@ namespace MacroTrackr.Controllers
         // GET: FoodItems/Details/5
         public ActionResult Details(int? id)
         {
+            string UserID = User.Identity.GetUserId();
+            /*FoodItem fooditem = db.FoodItems.Find(id);
+            FoodItem fooditem2 = new FoodItem();
+
+            fooditem2.Name = fooditem.Name;
+            fooditem2.Protein = fooditem.Protein;
+            fooditem2.Carbs = fooditem.Carbs;
+            fooditem2.Fat = fooditem.Fat;
+            fooditem2.UserID = fooditem.UserID;
+            
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            FoodItem fooditem = db.FoodItems.Find(id);
+            if (UserID == fooditem.UserID)
+            {
+                db.FoodItems.Add(fooditem2);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(fooditem2);
+            */
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -37,6 +67,19 @@ namespace MacroTrackr.Controllers
                 return HttpNotFound();
             }
             return View(foodItem);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Duplicate(FoodItem foodItem)
+        {
+            string userID = User.Identity.GetUserId();
+
+            foodItem.UserID = userID;
+
+                db.FoodItems.Add(foodItem);
+                db.SaveChanges();
+                return RedirectToAction("Dailyview");
         }
 
         // GET: FoodItems/Create
