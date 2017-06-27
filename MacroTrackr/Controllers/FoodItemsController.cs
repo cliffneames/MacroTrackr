@@ -28,35 +28,7 @@ namespace MacroTrackr.Controllers
         public ActionResult Details(int? id)
         {
             string UserID = User.Identity.GetUserId();
-            /*FoodItem fooditem = db.FoodItems.Find(id);
-            FoodItem fooditem2 = new FoodItem();
-
-            fooditem2.Name = fooditem.Name;
-            fooditem2.Protein = fooditem.Protein;
-            fooditem2.Carbs = fooditem.Carbs;
-            fooditem2.Fat = fooditem.Fat;
-            fooditem2.UserID = fooditem.UserID;
-            
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-            FoodItem fooditem = db.FoodItems.Find(id);
-            if (UserID == fooditem.UserID)
-            {
-                db.FoodItems.Add(fooditem2);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(fooditem2);
-            */
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -131,22 +103,27 @@ namespace MacroTrackr.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FoodItemID,Name,TimeOfMeal,WhenEaten,Carbs,Protein,Fat")] FoodItem foodItem)
+        public ActionResult Edit(FoodItem foodItem)
         {
             string userID = User.Identity.GetUserId();
-            FoodItem fooditem1 = db.FoodItems.Where(p => p.UserID == userID && p.FoodItemID == foodItem.FoodItemID).FirstOrDefault();
+            FoodItem originalFoodItem = db.FoodItems.Where(p => p.UserID == userID && p.FoodItemID == foodItem.FoodItemID).FirstOrDefault();
             
-            if (fooditem1 == null)
+            if (originalFoodItem == null)
             {
                 return HttpNotFound();
             }
             
             //Move over all the properties that need to be set.
-            fooditem1.Name = foodItem.Name;
+            originalFoodItem.Name = foodItem.Name;
+            originalFoodItem.Carbs = foodItem.Carbs;
+            originalFoodItem.Fat = foodItem.Fat;
+            originalFoodItem.Protein = foodItem.Protein;
+            originalFoodItem.WhenEaten = foodItem.WhenEaten;
+            originalFoodItem.TimeOfMeal = foodItem.TimeOfMeal;
 
             if (ModelState.IsValid)
             {
-                db.Entry(fooditem1).State = EntityState.Modified;
+                db.Entry(originalFoodItem).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
