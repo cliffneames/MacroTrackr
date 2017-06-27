@@ -7,15 +7,12 @@
 <h2>Macro Nutrient Preferences</h2>
 
 <p>
-    <button> @Html.ActionLink("Add Macro Restraints", "Create")</button>
+    <button> @Html.ActionLink("Add Macro Nutrient Goals", "Create")</button>
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Macro.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Minimum)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Maximum)
@@ -28,15 +25,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Macro.Name)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Minimum)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.Maximum)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserPreferenceID }) |
-            <!-- @Html.ActionLink("Details", "Details", new { id=item.UserPreferenceID }) | -->
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserPreferenceID }) |            
             @Html.ActionLink("Delete", "Delete", new { id=item.UserPreferenceID })
         </td>
     </tr>
@@ -46,5 +40,3 @@
 }
 
 </table>
-
-<button><a href="/userPreferences/Map"> Click here to see MacroTrackr in action!</a></button>

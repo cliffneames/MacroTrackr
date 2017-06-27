@@ -7,8 +7,9 @@
 <h2>Dailyview</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button> @Html.ActionLink("Add Food Item", "Create")</button>
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -32,7 +33,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model.foodItem)
+    @foreach (var item in Model.foodItem.OrderBy(f => f.TimeOfMeal))
     {
         <tr>
             <td>
@@ -55,7 +56,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.FoodItemID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.FoodItemID }) |
+                @Html.ActionLink("Duplicate", "Details", new { id = item.FoodItemID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.FoodItemID })
             </td>
         </tr>
@@ -65,7 +66,7 @@
 
 <table class="table">
 <tr>
-    <th>
+    <th id="Blank">
         @Html.DisplayNameFor(model => model.foodItem.First().Name)
     </th>
     <th>
@@ -77,25 +78,9 @@
     <th>
         @Html.DisplayNameFor(model => model.foodItem.First().Fat)
     </th>
-    <th></th>
+    
 </tr>
-    @foreach (var item in Model.foodItem)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Carbs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Protein)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fat)
-            </td>
-        </tr>
-    }
+ 
         <tr>
             <td>Totals</td>
             <td>@Model.foodItem.Sum(p => p.Carbs)</td>
@@ -105,17 +90,41 @@
     
         <tr>
             <td>Goals</td>
-            <td>@Model.userPreference.Where(m => m.Macro.Name == "Carbohydrates").FirstOrDefault().Maximum</td>
-            <td>@Model.userPreference.Where(m => m.Macro.Name == "Protein").FirstOrDefault().Maximum</td>
-            <td>@Model.userPreference.Where(m => m.Macro.Name == "Fat").FirstOrDefault().Maximum</td>
+            <td>@if (Model.userPreference.Any(m => m.Macro.Name == "Carbohydrates"))
+            {
+                @Model.userPreference.Where(m => m.Macro.Name == "Carbohydrates").FirstOrDefault().Maximum
+            }
+            </td>
+            <td>@if (Model.userPreference.Any(m => m.Macro.Name == "Protein"))
+            {
+                @Model.userPreference.Where(m => m.Macro.Name == "Protein").FirstOrDefault().Maximum
+            }
+            </td>
+            <td>@if(Model.userPreference.Any(m => m.Macro.Name == "Fat"))
+            {
+                @Model.userPreference.Where(m => m.Macro.Name == "Fat").FirstOrDefault().Maximum
+            }
+            </td>
         </tr>
 
         <tr>
-            <td>Current</td>
-            <td>@(Model.foodItem.Sum(p => p.Carbs) - Model.userPreference.Where(m => m.Macro.Name == "Carbohydrates").FirstOrDefault().Maximum)</td>
-            <td>@(Model.foodItem.Sum(p => p.Protein) - Model.userPreference.Where(m => m.Macro.Name == "Protein").FirstOrDefault().Maximum)</td>
-            <td>@(Model.foodItem.Sum(p => p.Fat) - Model.userPreference.Where(m => m.Macro.Name == "Fat").FirstOrDefault().Maximum)</td>
-             
+            <td>Remaining</td>
+            <td>@if (Model.userPreference.Any(m => m.Macro.Name == "Carbohydrates"))
+            {
+                @(Model.userPreference.Where(m => m.Macro.Name == "Carbohydrates").FirstOrDefault().Maximum - Model.foodItem.Sum(p => p.Carbs))
+            }
+            </td>
+            <td>@if (Model.userPreference.Any(m => m.Macro.Name == "Protein"))
+            {
+                @(Model.userPreference.Where(m => m.Macro.Name == "Protein").FirstOrDefault().Maximum - Model.foodItem.Sum(p => p.Protein))
+            }
+            </td>
+            <td>
+                @if (Model.userPreference.Any(m => m.Macro.Name == "Fat"))
+            {
+                @(Model.userPreference.Where(m => m.Macro.Name == "Fat").FirstOrDefault().Maximum - Model.foodItem.Sum(p => p.Fat))
+            }
+            </td>
         </tr>
 
 </table>
